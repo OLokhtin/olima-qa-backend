@@ -10,8 +10,7 @@ router = APIRouter()
 
 @router.post("/api/register",
              tags=["auth-controller"],
-             summary="register_user",
-             dependencies=[AuthDep]
+             summary="register_user"
              )
 async def register_user(
         data: UserScheme,
@@ -19,16 +18,15 @@ async def register_user(
 ):
     new_user = UserModel(
         user_email = data.user_email,
-        user_password = hash_password(data.password),
+        user_password = hash_password(data.user_password),
         user_phone=data.user_phone,
         user_name = data.user_name,
         user_surname = data.user_surname,
         user_birthday = data.user_birthday
     )
     session.add(new_user)
-    await session.flush()
     await session.commit()
-    return new_user
+    return {"message": "Successfully registered"}
 
 @router.post("/api/login",
              tags=["auth-controller"],
@@ -38,8 +36,8 @@ async def login_user(creds: AuthScheme,
                      session: SessionDep,
                      response: Response
                      ):
-    query = (select(UserScheme)
-             .filter(UserScheme.user_email == creds.user_email)
+    query = (select(UserModel)
+             .filter(UserModel.user_email == creds.user_email)
              )
     result = await session.execute(query)
     user = result.scalars().first()

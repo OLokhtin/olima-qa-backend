@@ -8,7 +8,8 @@ router = APIRouter()
 
 @router.get("/api/orders",
             tags=["order-controller"],
-            summary="get_orders"
+            summary="get_orders",
+            dependencies=[AuthDep]
             )
 async def get_all(session: SessionDep,
                   pagination: PaginationDep
