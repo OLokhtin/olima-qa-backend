@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from sqlalchemy import select
 
-from src.api.dependencies import SessionDep, AuthDep
+from src.api.dependencies import SessionDep
 from src.models.auth import UserModel
 from src.schemas.auth import UserScheme, AuthScheme
 from src.security import verify_password, security, config, hash_password
