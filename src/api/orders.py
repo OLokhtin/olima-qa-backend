@@ -4,8 +4,6 @@ from src.api.dependencies import SessionDep, PaginationDep, AuthDep
 from src.repository.orders import OrdersRepository
 from src.schemas.orders import OrderScheme
 
-from  src.logger import logger
-
 router = APIRouter()
 
 @router.get("/api/orders",
@@ -32,7 +30,6 @@ async def get_one(order_id:int,
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="Order not found"
                             )
-    logger.info(f"Get order: {order_id}")
     return order
 
 
