@@ -3,6 +3,7 @@ import uvicorn
 from fastapi.staticfiles import StaticFiles
 
 from src.api import main_router
+from src.security import security
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.middleware import log_middleware
@@ -10,6 +11,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 app = FastAPI(title="Olima QA")
 app.include_router(main_router)
+security.handle_errors(app)
 app.mount("/", StaticFiles(directory="/Users/oleglokhtin/PycharmProjects/olima-qa-backend/src/static", html=True))
 
 app.add_middleware(CORSMiddleware,

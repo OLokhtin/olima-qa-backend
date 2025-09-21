@@ -4,7 +4,8 @@ from sqlalchemy import select
 from src.api.dependencies import SessionDep
 from src.models.auth import UserModel
 from src.schemas.auth import UserScheme, AuthScheme
-from src.security import verify_password, security, config, hash_password
+from src.security import security, config
+from src.repository.auth import verify_password, hash_password
 
 router = APIRouter()
 
@@ -42,8 +43,8 @@ async def login_user(creds: AuthScheme,
     result = await session.execute(query)
     user = result.scalars().first()
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="User not found"
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Incorrect credentials"
                             )
     else:
         if verify_password(creds.user_password, user.user_password):
@@ -54,7 +55,7 @@ async def login_user(creds: AuthScheme,
             return {"message": "Successfully logged in"}
         else:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="Incorrect password"
+                                detail="Incorrect credentials"
                                 )
 
 @router.post("/api/logout",
