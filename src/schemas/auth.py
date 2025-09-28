@@ -8,6 +8,6 @@ class AuthScheme(BaseModel):
 
 class UserScheme(AuthScheme):
     user_phone: str
-    user_name: str = Field(min_length=2, max_length=50)
-    user_surname: str = Field(min_length=2, max_length=50)
+    user_name: str
+    user_surname: str
     user_birthday: date
