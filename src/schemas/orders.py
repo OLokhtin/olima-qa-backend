@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel, Field, EmailStr
 
@@ -8,5 +9,5 @@ class OrderScheme(BaseModel):
     customer_phone: str
     customer_email: EmailStr
     delivery_address: str
-    delivery_date: date
+    delivery_date: Optional[date] = None
     total_amount: float = Field(gt=0)
