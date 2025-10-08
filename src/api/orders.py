@@ -11,9 +11,10 @@ router = APIRouter()
             summary="get_orders",
             dependencies=[AuthDep]
             )
-async def get_all(session: SessionDep,
-                  pagination: PaginationDep
-                  ):
+async def get_all(
+        session: SessionDep,
+        pagination: PaginationDep
+):
     orders = await OrdersRepository.get_orders(session, pagination)
     return orders
 
@@ -22,9 +23,10 @@ async def get_all(session: SessionDep,
             summary="get_order",
             dependencies=[AuthDep]
             )
-async def get_one(order_id:int,
-                  session: SessionDep
-                  ):
+async def get_one(
+        order_id:int,
+        session: SessionDep
+):
     order = await OrdersRepository.get_order(order_id, session)
     if order is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -66,8 +68,9 @@ async def update_one(
                summary="delete_order",
                dependencies=[AuthDep]
                )
-async def delete_one(order_id: int,
-                     session: SessionDep
-                     ):
+async def delete_one(
+        order_id: int,
+        session: SessionDep
+):
     await OrdersRepository.delete_order(order_id, session)
     return {"message": "No Content"}

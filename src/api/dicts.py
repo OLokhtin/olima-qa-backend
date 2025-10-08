@@ -10,9 +10,10 @@ router = APIRouter()
             summary="get_dict",
             dependencies=[AuthDep]
             )
-async def get_dict(dict_key:str,
-                   session: SessionDep
-                   ):
+async def get_dict(
+        dict_key:str,
+        session: SessionDep
+):
     dict = await DictsRepository.get_dict(dict_key, session)
     if not dict:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

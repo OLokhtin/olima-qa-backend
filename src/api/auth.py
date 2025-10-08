@@ -33,10 +33,11 @@ async def register_user(
              tags=["auth-controller"],
              summary="login_user"
              )
-async def login_user(creds: AuthScheme,
-                     session: SessionDep,
-                     response: Response
-                     ):
+async def login_user(
+        creds: AuthScheme,
+        session: SessionDep,
+        response: Response
+):
     query = (select(UserModel)
              .filter(UserModel.user_email == creds.user_email)
              )

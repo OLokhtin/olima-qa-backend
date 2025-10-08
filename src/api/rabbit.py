@@ -1,20 +1,22 @@
-# http://localhost:15672
-from pika import ConnectionParameters, BlockingConnection
+from fastapi import APIRouter
 
-connection_params = ConnectionParameters(
-    host="localhost",
-    port=5672
-)
+from src.repository.rabbit import produce_order
+from src.schemas.orders import OrderScheme
 
-def main():
-    with BlockingConnection(connection_params) as conn:
-        with conn.channel() as ch:
-            ch.queue_declare(queue="new_orders")
-            ch.basic_publish(
-                exchange="",
-                routing_key="new_orders",
-                body="Hello World"
+router = APIRouter()
+
+@router.post("/api/rabbit/create_order",
+            tags=["rabbit-controller"],
+            summary="produce_new_order"
             )
+def produce_new_order(data: OrderScheme):
+    produce_order(data, "new_orders")
+    return {"message": "OK"}
 
-if __name__ == "__main__":
-    main()
+@router.post("/api/rabbit/update_order",
+            tags=["rabbit-controller"],
+            summary="produce_updated_order"
+            )
+def produce_updated_order(data: OrderScheme):
+    produce_order(data, "updated_orders")
+    return {"message": "OK"}
