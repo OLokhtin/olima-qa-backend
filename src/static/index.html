@@ -87,6 +87,17 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
+        .rabbitmq-link {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .rabbitmq-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+        }
+
         .info-text {
             margin-top: 2rem;
             color: #718096;
@@ -140,6 +151,10 @@
 
             <a href="http://localhost:3000" class="link-button frontend-link" target="_blank">
                 🚀 Go to Frontend
+            </a>
+
+            <a href="http://localhost:15672" class="link-button rabbitmq-link" target="_blank">
+                🐰 RabbitMQ
             </a>
         </div>
 

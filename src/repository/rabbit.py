@@ -3,17 +3,13 @@ import json
 
 from src.schemas.orders import OrderScheme
 
-# http://localhost:15672
 connection_params = ConnectionParameters(
     host="localhost",
     port=5672
 )
 
 def produce_order(data: OrderScheme, order_queue: str):
-    order_data = data.model_dump()
-    if order_data.get('delivery_date'):
-        order_data['delivery_date'] = order_data['delivery_date'].isoformat()
-
+    order_data = data.model_dump_json()
     with BlockingConnection(connection_params) as conn:
         with conn.channel() as ch:
             ch.queue_declare(queue=order_queue)
