@@ -9,7 +9,7 @@ connection_params = ConnectionParameters(
 )
 
 def produce_order(data: OrderScheme, order_queue: str):
-    order_data = data.model_dump_json()
+    order_data = data.model_dump(mode='json')
     with BlockingConnection(connection_params) as conn:
         with conn.channel() as ch:
             ch.queue_declare(queue=order_queue)
